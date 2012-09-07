@@ -2,7 +2,9 @@ package com.example.soundsignatureintegration;
 
 
 import java.io.File;
+import java.io.IOException;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 public class ShowImageActivity extends Activity {
-
+	
+	  MediaPlayer mp = new MediaPlayer();
+	  
+	  
+	  @Override
+	protected void onPause() {
+	
+		  mp.stop();
+		  // TODO Auto-generated method stub
+		super.onPause();
+	}
+	  
+	  @Override
+	protected void onStop() {
+	
+		  mp.stop();
+		  // TODO Auto-generated method stub
+		super.onStop();
+	}
 	
 	int x=0,y=0;
 	@Override
@@ -39,12 +59,43 @@ public class ShowImageActivity extends Activity {
 		
 		String [] ini = data[1].split("###");
 		
+		
+		  //set up MediaPlayer    
+	  
+	 
+	    try {
+	        mp.setDataSource(ini[0]);
+	    } catch (IllegalArgumentException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IllegalStateException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    try {
+	        mp.prepare();
+	    } catch (IllegalStateException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    mp.start();
+
+		
+		
+		
+		
 		final String [] values= data[Integer.parseInt(data[0])].split("###");
+
+		/*Image resource of the imageView*/
 		
 		File f = new File(values[0]);
-		
 		ImageView image = (ImageView) findViewById(R.id.imageView1);
-
 		image.setImageURI(Uri.fromFile(f));
 
 		  
