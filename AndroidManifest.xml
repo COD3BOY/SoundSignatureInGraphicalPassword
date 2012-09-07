@@ -6,7 +6,13 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
-    <uses-configuration android:reqKeyboardType="twelvekey" android:reqFiveWayNav="true" android:reqNavigation="trackball" android:reqHardKeyboard="true" android:reqTouchScreen="finger"/>
+
+    <uses-configuration
+        android:reqFiveWayNav="true"
+        android:reqHardKeyboard="true"
+        android:reqKeyboardType="twelvekey"
+        android:reqNavigation="trackball"
+        android:reqTouchScreen="finger" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -21,16 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"  >
+        <activity android:name=".RegisterActivity" >
         </activity>
-        <activity android:name=".SelectImageActivity"
-              >
+        <activity android:name=".SelectImageActivity" >
         </activity>
         <activity android:name=".FilePickerActivity" >
         </activity>
-        <activity android:name=".ReadFileActivity" >
+        <activity
+            android:name=".ReadFileActivity"
+            android:noHistory="true" >
         </activity>
-         <activity android:name=".ShowImageActivity" >
+        <activity
+            android:name=".ShowImageActivity"
+            android:noHistory="true" >
         </activity>
     </application>
 

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 public class ShowImageActivity extends Activity {
@@ -29,6 +31,11 @@ public class ShowImageActivity extends Activity {
 		String datas = getIntent().getStringExtra("DATAS");
 		
 		final String [] data = datas.split("%%%");
+		
+		for(int i=0;i<data.length;i++)
+			Log.e("data", data[i]);
+		
+		final int toPass = Integer.parseInt(data[0]);;
 		
 		String [] ini = data[1].split("###");
 		
@@ -46,6 +53,8 @@ public class ShowImageActivity extends Activity {
 			
 			public boolean onTouch(View v, MotionEvent event) {
 				
+				
+				
 				Toast.makeText(ShowImageActivity.this,
 						"Clicked : "+(int)event.getX()+","+(int)event.getY(),
 						Toast.LENGTH_SHORT).show();
@@ -60,10 +69,25 @@ public class ShowImageActivity extends Activity {
 				Log.e("Clicked&Saved","_Clicked_X :"+x+" _Saved_X :"+center_x+"_Clicked_Y : "+y+" _Saved_Y"+center_y);
 				
 				
-				if( ((x-center_x)^2 + (y - center_y)^2)< (75^2))
+				
+				if(x<center_x+25&&x>center_x-25)
 				{
-					Log.e("Success", "Success!");
+					if(y<center_y+25&&y>center_y-25)
+					{
+						
+						data[toPass]="Y";
+						Log.e("Login", "Success!");
+					}
 				}
+				else
+				{
+
+					data[toPass]="N";
+					Log.e("Login", "Fail!");
+					
+				}
+				
+				
 				
 				
 				return false;
@@ -85,7 +109,7 @@ OnClickListener clickListener = new OnClickListener() {
 	public void onClick(View v) {
 	
 		Log.e("DEBUG","Inside onClick()");
-		int val = Integer.parseInt(data[0])+1;
+		int val = toPass+1;
 		if((val<5))
 				{
 			Log.e("DEBUG","Condition satisfied!");
@@ -97,10 +121,41 @@ OnClickListener clickListener = new OnClickListener() {
 				}
 		else 
 		{
-		
+			
+			if(data[2].equalsIgnoreCase("Y")&&data[3].equalsIgnoreCase("Y")&&data[toPass].equalsIgnoreCase("Y"))
+			{
 
-			Toast.makeText(getApplicationContext(), "Success or fail!", Toast.LENGTH_LONG).show();
+				AlertDialog.Builder builder = new AlertDialog.Builder(ShowImageActivity.this);
+				builder.setMessage("Login succesfull!")
+				       .setCancelable(false)
+				       .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				                ShowImageActivity.this.finish();
+				           }
+				       })     
+				       ;
+				AlertDialog alert = builder.create();
+				alert.show();
+			
+				
+			}
+			else
+			{
 
+				AlertDialog.Builder builder = new AlertDialog.Builder(ShowImageActivity.this);
+				builder.setMessage("Login fail!")
+				       .setCancelable(false)
+				       .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				                ShowImageActivity.this.finish();
+				           }
+				       })     
+				       ;
+				AlertDialog alert = builder.create();
+				alert.show();
+			
+			}
+			
 
 		}
 		
